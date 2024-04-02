@@ -1,6 +1,7 @@
 package com.gets.service;
 
 import com.gets.Enums.Status;
+import com.gets.model.Employee;
 import com.gets.model.Patient;
 import com.gets.repository.PatientRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,17 @@ public class PatientService {
 
     public List<Patient> getPatientsByDoctorStatus(Status status) {
         return patientRepo.findPatientsByEmployeeStatus(status);
+    }
+
+    public void addNewPatient(Patient patient) {
+        patientRepo.save(patient);
+    }
+
+    public void updatePatient(int id, Patient patient) {
+        Optional<Patient> patientOld = patientRepo.findById(id);
+        if (patientOld.isPresent() && patient.getName() != null && patient.getDateOfBirth() != null && patient.getAdmittedBy() != null) {
+            patient.setPatientId(id);
+            patientRepo.save(patient);
+        }
     }
 }

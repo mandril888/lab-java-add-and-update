@@ -1,6 +1,7 @@
 package com.gets.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,9 +17,10 @@ public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int patientId;
+    @NotEmpty(message = "Name cannot be empty")
     private String name;
     private LocalDate dateOfBirth;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "admitted_by", referencedColumnName = "employeeId")
     private Employee admittedBy;
 }
